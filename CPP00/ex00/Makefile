@@ -13,8 +13,12 @@ DEPS = $(OBJS:.o=.d)
 
 IFLAGS = -I$(INCDIR)
 
-TOTAL := $(words $(SRCS))
 COUNT_FILE = .build_count
+TOTAL_FILE = .build_total
+
+define INIT_COUNT
+$(if $(COUNT_STARTED),:,$(eval COUNT_STARTED := 1)needed=0; for obj in $(OBJS); do $(MAKE) --no-print-directory -q $$obj >/dev/null 2>&1; status=$$?; if [ $$status -eq 1 ]; then needed=$$((needed + 1)); elif [ $$status -eq 2 ]; then needed=$(words $(OBJS)); break; fi; done; if [ $$needed -eq 0 ]; then needed=1; fi; echo 0 > $(COUNT_FILE); echo $$needed > $(TOTAL_FILE); printf "\n\n")
+endef
 
 define ESC
 $(shell printf '\033')
@@ -28,23 +32,22 @@ YELLOW  = $(ESC)[33m
 ORANGE  = $(ESC)[38;5;208m
 YLLWGRN = $(ESC)[38;2;150;255;25m
 
-all: init $(NAME)
-
-init:
-	@echo 0 > $(COUNT_FILE)
+all: $(NAME)
 
 $(NAME): $(OBJS)
-	@printf "\n$(GREEN)Linking...$(RESET)\n"
+	@printf "$(GREEN)Linking...$(RESET)\n"
 	@$(CXX) $(CXXFLAGS) $(IFLAGS) $(OBJS) -o $(NAME)
-	@rm -f $(COUNT_FILE)
+	@rm -f $(COUNT_FILE) $(TOTAL_FILE)
 	@printf "$(GREEN)Build complete (100%%)$(RESET)\n"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR)
-	@count=$$(cat $(COUNT_FILE)); \
+	@$(call INIT_COUNT); \
+	count=$$(cat $(COUNT_FILE)); \
+	total=$$(cat $(TOTAL_FILE)); \
 	count=$$((count + 1)); \
 	echo $$count > $(COUNT_FILE); \
 	\
-	percent_str=$$(echo "scale=2; $$count / $(TOTAL) * 100" | bc); \
+	percent_str=$$(echo "scale=2; $$count / $$total * 100" | bc); \
 	percent_int=$$(printf "%.0f" $$percent_str); \
 	\
 	filled=$$((percent_int / 2)); \
@@ -60,10 +63,10 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR)
 	elif [ $$percent_int -lt 100 ]; then color="$(YLLWGRN)"; \
 	else color="$(GREEN)"; fi; \
 	\
-	printf "\r%sCompiling $(NAME): [%s%s] [%3d/%3d] %6.2f%%%s" \
-	"$(BOLD)$$color" "$$bar" "$$bg" $$count $(TOTAL) "$$percent_str" "$(RESET)"; \
+	printf "$(ESC)[2A\r$(ESC)[K%sCompiling $(NAME): [%s%s] [%3d/%3d] %6.2f%%%s\n" \
+	"$(BOLD)$$color" "$$bar" "$$bg" $$count $$total "$$percent_str" "$(RESET)"; \
 	\
-	printf "\nCompiling %-34s" "$(notdir $@)"; \
+	printf "\r$(ESC)[K$(BOLD)Current file:$(RESET) %-34s\n" "$(notdir $<)"; \
 	\
 	$(CXX) $(CXXFLAGS) $(IFLAGS) -c $< -o $@
 
@@ -73,7 +76,7 @@ $(OBJDIR):
 -include $(DEPS)
 
 clean:
-	@rm -rf $(OBJDIR) $(COUNT_FILE)
+	@rm -rf $(OBJDIR) $(COUNT_FILE) $(TOTAL_FILE)
 	@printf "$(RED)Objects removed$(RESET)\n"
 
 fclean: clean
@@ -82,4 +85,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re init
+.PHONY: all clean fclean re
