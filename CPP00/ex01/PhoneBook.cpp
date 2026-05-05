@@ -29,8 +29,7 @@ bool	PhoneBook::readRequiredField(const std::string& label, std::string& value)
 			std::cout << "\nEOF detected. Exiting." << std::endl;
 			return (false);
 		}
-		trim(value);
-		if (!value.empty())
+		if (!trim_copy(value).empty())
 			return (true);
 		std::cout << "Field cannot be empty." << std::endl;
 	}
@@ -40,6 +39,7 @@ bool	PhoneBook::readNameField(const std::string& label, std::string& value)
 {
 	while (readRequiredField(label, value))
 	{
+		trim(value);
 		trim_inner(value);
 		if (isNameValid(value))
 			return (true);
@@ -54,10 +54,10 @@ bool	PhoneBook::readPhoneNumberField(const std::string& label, std::string& valu
 {
 	while (readRequiredField(label, value))
 	{
+		trim(value);
 		if (isPhoneNumberValid(value))
 			return (true);
-		std::cout << "Phone number must use E.164 format: + followed by "
-			"1 to 15 digits, with the first digit nonzero." << std::endl;
+		std::cout << "Phone number must use E.164 format: +[1-9][0-9]{0,14}" << std::endl;
 	}
 	return (false);
 }
