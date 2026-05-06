@@ -73,7 +73,7 @@ bool PhoneBook::isPhoneNumberValid(const std::string& value)
 {
 	std::string::size_type	i;
 
-	if (value.length() < 3 || value[0] != '+' || value.length() > 16 || value[1] < '1' || value[1] > '9')
+	if (value.length() < 3 || value.length() > 16 || value[0] != '+' || value[1] < '1' || value[1] > '9')
 		return (false);
 	i = 2;
 	while (i < value.length())
