@@ -15,23 +15,20 @@ private:
 	int		_nextIndex;
 
 	static std::string	formatColumn(const std::string& text);
-	static bool			readRequiredField(const std::string& label,
-							std::string& value);
-	static bool			readNameField(const std::string& label,
-							std::string& value);
-	static bool			readPhoneNumberField(const std::string& label,
-							std::string& value);
+	static bool			readRequiredField(const std::string& label, std::string& value);
+	static bool			readNameField(const std::string& label, std::string& value);
+	static bool			readPhoneNumberField(const std::string& label, std::string& value);
 	static bool			isNameValid(const std::string& value);
 	static bool			isPhoneNumberValid(const std::string& value);
 	static bool			isAlphabetic(char c);
-	void				printContactSummary(int index) const;
+	void				printContactTable(void) const;
 	void				printContactDetails(int index) const;
 
 public:
 	PhoneBook(void);
 
 	bool	addContact(void);
-	void	searchContacts(void) const;
+	bool	searchContacts(void) const;
 };
 
 #endif

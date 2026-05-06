@@ -1,6 +1,5 @@
 #include "PhoneBook.hpp"
 #include "trim.h"
-
 #include <iostream>
 
 int	main(void)
@@ -13,7 +12,7 @@ int	main(void)
 		std::cout << "Enter command (ADD, SEARCH, EXIT): ";
 		if (!std::getline(std::cin, command))
 		{
-			std::cout << "\nEOF detected. Exiting." << std::endl;
+			std::cout << "\nEOF detected. Exiting..." << std::endl;
 			break ;
 		}
 		trim(command);
@@ -23,10 +22,13 @@ int	main(void)
 				break ;
 		}
 		else if (command == "SEARCH")
-			phoneBook.searchContacts();
+		{
+			if (!phoneBook.searchContacts())
+				break ;
+		}
 		else if (command == "EXIT")
 		{
-			std::cout << "Exiting." << std::endl;
+			std::cout << "Exiting..." << std::endl;
 			break ;
 		}
 	}

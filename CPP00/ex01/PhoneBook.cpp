@@ -12,13 +12,6 @@ PhoneBook::PhoneBook(void) :
 {
 }
 
-std::string	PhoneBook::formatColumn(const std::string& text)
-{
-	if (text.length() > 10)
-		return (text.substr(0, 9) + ".");
-	return (text);
-}
-
 bool	PhoneBook::readRequiredField(const std::string& label, std::string& value)
 {
 	while (true)
@@ -26,7 +19,7 @@ bool	PhoneBook::readRequiredField(const std::string& label, std::string& value)
 		std::cout << label;
 		if (!std::getline(std::cin, value))
 		{
-			std::cout << "\nEOF detected. Exiting." << std::endl;
+			std::cout << "\nEOF detected. Exiting..." << std::endl;
 			return (false);
 		}
 		if (!trim_copy(value).empty())
@@ -35,34 +28,7 @@ bool	PhoneBook::readRequiredField(const std::string& label, std::string& value)
 	}
 }
 
-bool	PhoneBook::readNameField(const std::string& label, std::string& value)
-{
-	while (readRequiredField(label, value))
-	{
-		trim(value);
-		trim_inner(value);
-		if (isNameValid(value))
-			return (true);
-		std::cout << "Name can contain only letters, spaces, hyphens, "
-			"and apostrophes. Spaces, hyphens, and apostrophes must be "
-			"between letters." << std::endl;
-	}
-	return (false);
-}
-
-bool	PhoneBook::readPhoneNumberField(const std::string& label, std::string& value)
-{
-	while (readRequiredField(label, value))
-	{
-		trim(value);
-		if (isPhoneNumberValid(value))
-			return (true);
-		std::cout << "Phone number must use E.164 format: +[1-9][0-9]{0,14}" << std::endl;
-	}
-	return (false);
-}
-
-bool	PhoneBook::isAlphabetic(char c)
+inline bool	PhoneBook::isAlphabetic(char c)
 {
 	return (std::isalpha(static_cast<unsigned char>(c)) != 0);
 }
@@ -78,23 +44,29 @@ bool	PhoneBook::isNameValid(const std::string& value)
 	while (i < value.length())
 	{
 		c = value[i];
-		if (isAlphabetic(c))
-		{
-			i++;
-			continue ;
-		}
 		if (c == ' ' || c == '-' || c == '\'')
 		{
-			if (i == 0 || i + 1 == value.length())
-				return (false);
-			if (!isAlphabetic(value[i - 1]) || !isAlphabetic(value[i + 1]))
+			if (i == 0 || i + 1 == value.size() || !isAlphabetic(value[i - 1]) || !isAlphabetic(value[i + 1]))
 				return (false);
 		}
-		else
+		else if (!isAlphabetic(c))
 			return (false);
 		i++;
 	}
 	return (true);
+}
+
+bool	PhoneBook::readNameField(const std::string& label, std::string& value)
+{
+	while (readRequiredField(label, value))
+	{
+		trim(value);
+		trim_inner(value);
+		if (isNameValid(value))
+			return (true);
+		std::cout << "Name can only contain letters, seperated by a single space, hyphen or apostrophes" << std::endl;
+	}
+	return (false);
 }
 
 bool PhoneBook::isPhoneNumberValid(const std::string& value)
@@ -122,6 +94,18 @@ bool PhoneBook::isPhoneNumberValid(const std::string& value)
 	return (true);
 }
 
+bool	PhoneBook::readPhoneNumberField(const std::string& label, std::string& value)
+{
+	while (readRequiredField(label, value))
+	{
+		trim(value);
+		if (isPhoneNumberValid(value))
+			return (true);
+		std::cout << "Phone number must use E.164 format: +[1-9][0-9]{0,14}" << std::endl;
+	}
+	return (false);
+}
+
 bool	PhoneBook::addContact(void)
 {
 	std::string	firstName;
@@ -136,8 +120,7 @@ bool	PhoneBook::addContact(void)
 		|| !readPhoneNumberField("Phone number: ", phoneNumber)
 		|| !readRequiredField("Darkest secret: ", darkestSecret))
 		return (false);
-	_contacts[_nextIndex].set(firstName, lastName, nickname,
-		phoneNumber, darkestSecret);
+	_contacts[_nextIndex].set(firstName, lastName, nickname, phoneNumber, darkestSecret);
 	_nextIndex = (_nextIndex + 1) % MAX_CONTACTS;
 	if (_size < MAX_CONTACTS)
 		_size++;
@@ -145,14 +128,27 @@ bool	PhoneBook::addContact(void)
 	return (true);
 }
 
-void	PhoneBook::printContactSummary(int index) const
+inline std::string	PhoneBook::formatColumn(const std::string& text)
 {
-	const Contact&	contact = _contacts[index];
+	if (text.length() > 10)
+		return (text.substr(0, 9) + ".");
+	return (text);
+}
 
-	std::cout << std::setw(10) << index << "|"
-		<< std::setw(10) << formatColumn(contact.getFirstName()) << "|"
-		<< std::setw(10) << formatColumn(contact.getLastName()) << "|"
-		<< std::setw(10) << formatColumn(contact.getNickname()) << std::endl;
+void	PhoneBook::printContactTable(void) const
+{
+
+	std::cout << std::setw(10) << "index" << "|"
+		<< std::setw(10) << "first name" << "|"
+		<< std::setw(10) << "last name" << "|"
+		<< std::setw(10) << "nickname" << std::endl;
+	for (int i = 0; i < _size; i++)
+	{
+		std::cout << std::setw(10) << i << "|"
+			<< std::setw(10) << formatColumn(_contacts[i].getFirstName()) << "|"
+			<< std::setw(10) << formatColumn(_contacts[i].getLastName()) << "|"
+			<< std::setw(10) << formatColumn(_contacts[i].getNickname()) << std::endl;
+	}
 }
 
 void	PhoneBook::printContactDetails(int index) const
@@ -166,7 +162,7 @@ void	PhoneBook::printContactDetails(int index) const
 	std::cout << "Darkest secret: " << contact.getDarkestSecret() << std::endl;
 }
 
-void	PhoneBook::searchContacts(void) const
+bool	PhoneBook::searchContacts(void) const
 {
 	std::string			line;
 	std::stringstream	stream;
@@ -176,27 +172,26 @@ void	PhoneBook::searchContacts(void) const
 	if (_size == 0)
 	{
 		std::cout << "PhoneBook is empty." << std::endl;
-		return ;
+		return (true);
 	}
-	std::cout << std::setw(10) << "index" << "|"
-		<< std::setw(10) << "first name" << "|"
-		<< std::setw(10) << "last name" << "|"
-		<< std::setw(10) << "nickname" << std::endl;
-	for (int i = 0; i < _size; i++)
-		printContactSummary(i);
-	std::cout << "Enter index: ";
-	if (!std::getline(std::cin, line))
-		return ;
-	stream << line;
-	if (!(stream >> index) || (stream >> extra) || index < 0 || index >= _size)
+	printContactTable();
+	while (true)
 	{
-		std::cout << "Invalid index." << std::endl;
-		return ;
+		std::cout << "Enter index: ";
+		if (!std::getline(std::cin, line))
+		{
+			std::cout << "\nEOF detected. Exiting..." << std::endl;
+			return (false);
+		}
+		stream << line;
+		if (!(stream >> index) || stream >> extra || index < 0 || index >= _size || !_contacts[index].isSet())
+		{
+			std::cout << "Invalid index." << std::endl;
+			stream.clear();
+			stream.str(std::string());
+			continue;
+		}
+		printContactDetails(index);
+		return (true);
 	}
-	if (!_contacts[index].isSet())
-	{
-		std::cout << "Invalid index." << std::endl;
-		return ;
-	}
-	printContactDetails(index);
 }

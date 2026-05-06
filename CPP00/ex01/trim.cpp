@@ -17,10 +17,9 @@ std::string&	trim(std::string& s)
 	return (s);
 }
 
-std::string trim_copy(std::string s)
+inline std::string trim_copy(std::string s)
 {
-	trim(s);
-	return s;
+	return trim(s);
 }
 
 std::string& trim_inner(std::string& s)
@@ -48,8 +47,7 @@ std::string& trim_inner(std::string& s)
 	return s;
 }
 
-std::string	trim_inner_copy(std::string s)
+inline std::string	trim_inner_copy(std::string s)
 {
-	trim_inner(s);
-	return (s);
+	return trim_inner(s);
 }
