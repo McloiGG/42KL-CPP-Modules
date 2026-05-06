@@ -1,7 +1,7 @@
 NAME = account
 
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -Wpedantic -MMD -MP -std=c++98
 
 SRCDIR = .
 INCDIR = .
