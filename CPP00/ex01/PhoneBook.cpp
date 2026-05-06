@@ -72,18 +72,9 @@ bool	PhoneBook::readNameField(const std::string& label, std::string& value)
 bool PhoneBook::isPhoneNumberValid(const std::string& value)
 {
 	std::string::size_type	i;
-	std::string::size_type	digit_count;
 
-	if (value.length() < 3 || value[0] != '+')
+	if (value.length() < 3 || value[0] != '+' || value.length() > 16 || value[1] < '1' || value[1] > '9')
 		return (false);
-
-	digit_count = value.length() - 1;
-	if (digit_count < 2 || digit_count > 15)
-		return (false);
-
-	if (value[1] < '1' || value[1] > '9')
-		return (false);
-
 	i = 2;
 	while (i < value.length())
 	{
