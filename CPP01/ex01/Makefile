@@ -1,4 +1,4 @@
-NAME = zHorde
+NAME = horde
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -Wpedantic -MMD -MP -std=c++98
