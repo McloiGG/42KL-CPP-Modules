@@ -33,5 +33,6 @@ int main()
 	std::cout << "The memory address of the other string variable: " << &anotherString << std::endl;
 	printAddresses(string, stringPTR, stringREF);
 	std::cout << "This proves that the reference is still referring to the original variable instead of the other varaible I assigned to it." << std::endl;
-	std::cout << "\nThis is because a reference cannot be reassigned to refer to a different variable after it's intial one." << std::endl;
+	std::cout << "\nThis is because a reference cannot be reassigned to refer to a different variable after it's intial one.";
+	std::cout << "Essentially, the reference is an alias for the original variable and any changes made to the reference will affect the original variable." << std::endl;
 }
