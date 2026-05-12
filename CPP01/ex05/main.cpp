@@ -3,10 +3,13 @@
 
 static void run_case(Harl &harl, const std::string &label, const std::string &level)
 {
+	std::string	levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+
 	std::cout << "=== " << label << " ===" << std::endl;
 	std::cout << "Input: [" << level << "]" << std::endl;
 	harl.complain(level);
-	std::cout << std::endl;
+	if (level != levels[0] && level != levels[1] && level != levels[2] && level != levels[3])
+		std::cout << std::endl;
 }
 
 int main()
