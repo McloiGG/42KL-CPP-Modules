@@ -13,15 +13,24 @@ int main()
 {
 	Harl harl;
 
-	run_case(harl, "Valid level: DEBUG", "DEBUG");
-	run_case(harl, "Valid level: INFO", "INFO");
-	run_case(harl, "Valid level: WARNING", "WARNING");
-	run_case(harl, "Valid level: ERROR", "ERROR");
-	run_case(harl, "Edge case: empty string", "");
-	run_case(harl, "Edge case: lowercase", "debug");
-	run_case(harl, "Edge case: mixed case", "WaRnInG");
-	run_case(harl, "Edge case: leading space", " INFO");
-	run_case(harl, "Edge case: trailing space", "ERROR ");
-	run_case(harl, "Edge case: unknown token", "WHATEVER");
-	run_case(harl, "Edge case: near match", "WARN");
+	std::cout << "=== VALID TESTS ===" << std::endl;
+	run_case(harl, "DEBUG", "DEBUG");
+	run_case(harl, "INFO", "INFO");
+	run_case(harl, "WARNING", "WARNING");
+	run_case(harl, "ERROR", "ERROR");
+	std::cout << "=== LOOP ===" << std::endl;
+	for (int i = 0; i < 3; i++)
+		harl.complain("DEBUG");
+	std::cout << std::endl;
+	std::cout << "=== INVALID TESTS ===" << std::endl;
+	run_case(harl, "EMPTY STRING", "");
+	run_case(harl, "LOWERCASE", "debug");
+	run_case(harl, "MIXED CASE", "WaRnInG");
+	run_case(harl, "LEADING SPACE", " INFO");
+	run_case(harl, "TRAILING SPACE", "ERROR ");
+	run_case(harl, "UNKNOWN TOKEN", "WHATEVER");
+	run_case(harl, "NEAR MATCH", "WARN");
+	run_case(harl, "TAB", "\tINFO");
+	run_case(harl, "MIDDLE NULL", "WARN\0ING");
+	run_case(harl, "NEWLINE", "ERROR\n");
 }
