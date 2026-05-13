@@ -42,7 +42,7 @@ int	main(int argc, char** argv)
 			pos += s2.length();
 		}
 		outfile << line;
-		if (file.peek() != EOF) // not file.eof() because it checks for eof flag after we've actually read to that point
+		if (!file.eof())
 			outfile << std::endl;
 	}
 	if (file.bad()) // bad to check I/O errors, fail can be set by eof which would trigger false positive

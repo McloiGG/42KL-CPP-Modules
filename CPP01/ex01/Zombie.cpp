@@ -1,4 +1,5 @@
 #include "Zombie.hpp"
+# include <iostream>
 
 Zombie::Zombie() : _name("Unnamed Zombie")
 {
