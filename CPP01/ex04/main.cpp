@@ -3,17 +3,17 @@
 
 int	main(int argc, char** argv)
 {
-	std::ifstream	file(argv[1]);
-	std::string		s1(argv[2]);
-	std::string		s2(argv[3]);
-	std::string		line;
-	std::ofstream	outfile((std::string(argv[1]) + ".replace").c_str());
-
 	if (argc != 4)
 	{
 		std::cerr << "Usage: ./replace <filename> <search> <replace>" << std::endl;
 		return (1);
 	}
+
+	std::ifstream	file(argv[1]);
+	std::string		s1(argv[2]);
+	std::string		s2(argv[3]);
+	std::string		line;
+
 	if (!file)
 	{
 		std::cerr << "Error: Could not open file " << argv[1] << std::endl;
@@ -22,6 +22,14 @@ int	main(int argc, char** argv)
 	if (s1.empty())
 	{
 		std::cerr << "Error: Search string cannot be empty." << std::endl;
+		return (1);
+	}
+
+	std::ofstream	outfile((std::string(argv[1]) + ".replace").c_str());
+
+	if (!outfile)
+	{
+		std::cerr << "Error: Could not create " << std::string(argv[1]) + ".replace" << std::endl;
 		return (1);
 	}
 	while (std::getline(file, line))
@@ -35,5 +43,7 @@ int	main(int argc, char** argv)
 		}
 		outfile << line << std::endl;
 	}
-
+	//The file objects are closed automatically when they go out of scope (RAII (Resource Acquisition Is Initialization)).
+	//file.close();
+	//outfile.close();
 }
