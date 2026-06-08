@@ -3,7 +3,6 @@
 
 Fixed::Fixed( void ) : raw_bits( 0 )
 {
-	std::cout << "Default constructor called" << std::endl;
 }
 
 // Fixed::Fixed( const Fixed& src ) : raw_bits( src.raw_bits )

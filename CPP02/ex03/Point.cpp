@@ -1,4 +1,5 @@
 #include "Point.hpp"
+#include <sstream>
 
 Point::Point( void ) : x( 0 ), y( 0 )
 {
@@ -39,7 +40,20 @@ Fixed	Point::getY( void ) const
 	return this->y;
 }
 
+Fixed	Point::cross_product(Point const a, Point const b, Point const c)
+{
+	const Fixed	ax = (a.getX() - c.getX());
+	const Fixed	ay = (a.getY() - c.getY());
+	const Fixed	bx = (b.getX() - c.getX());
+	const Fixed	by = (b.getY() - c.getY());
+
+	return (ax * by) - (ay * bx);
+}
+
 std::string	Point::print_format( void ) const
 {
-	return "(" + std::to_string( this->getX().toFloat() ) + ", " + std::to_string( this->getY().toFloat() ) + ")";
+	std::stringstream ss;
+
+	ss << "(" << this->getX().toFloat() << ", " << this->getY().toFloat() << ")";
+	return ss.str();
 }

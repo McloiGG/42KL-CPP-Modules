@@ -7,7 +7,7 @@ SRCDIR = .
 INCDIR = .
 OBJDIR = obj
 
-SRCS = $(addprefix $(SRCDIR)/, main.cpp Fixed.cpp)
+SRCS = $(addprefix $(SRCDIR)/, main.cpp bsp.cpp Fixed.cpp Point.cpp)
 OBJS = $(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 DEPS = $(OBJS:.o=.d)
 

@@ -18,6 +18,7 @@ public:
 
 	Fixed		getX( void ) const;
 	Fixed		getY( void ) const;
+	static Fixed		cross_product(Point const a, Point const b, Point const c);
 	std::string	print_format( void ) const;
 };
 
