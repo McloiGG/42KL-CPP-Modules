@@ -7,7 +7,7 @@ Point::Point( void ) : x( 0 ), y( 0 )
 
 Point::Point( const float x, const float y ) : x( x ), y( y )
 {
-	std::cout << this->print_format() << std::endl;
+	std::cout << "Constructed with the following coordinates: " << this->print_format() << std::endl;
 }
 
 Point::Point( const Point& src ) : x( src.getX() ), y( src.getY() )

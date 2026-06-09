@@ -5,7 +5,7 @@ Fixed::Fixed( void ) : raw_bits( 0 )
 {
 }
 
-// Fixed::Fixed( const Fixed& src ) : raw_bits( src.raw_bits )
+// Fixed::Fixed( const Fixed& src ) : raw_bits( src.getRawBits() )
 // {
 // 	std::cout << "Copy constructor called" << std::endl;
 // }
@@ -16,18 +16,19 @@ Fixed::Fixed( void ) : raw_bits( 0 )
 // 	this->raw_bits = src.getRawBits();
 // }
 
-Fixed::Fixed( const Fixed& src ) : raw_bits( src.getRawBits() )
+Fixed::Fixed( const Fixed& src )
 {
+	*this = src;
 }
 
 Fixed::Fixed( const int n )
 {
-	this->setRawBits(static_cast<int64_t>(n) * ( 1 << this->fractional_bits ));
+	this->setRawBits(n * ( 1 << this->fractional_bits ));
 }
 
 Fixed::Fixed( const float f )
 {
-	this->setRawBits(roundf( static_cast<int64_t>(f) * ( 1 << this->fractional_bits )));
+	this->setRawBits(roundf( f * ( 1 << this->fractional_bits )));
 }
 
 Fixed&	Fixed::operator=( const Fixed& rhs )

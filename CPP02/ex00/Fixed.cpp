@@ -6,7 +6,7 @@ Fixed::Fixed( void ) : raw_bits( 0 )
 	std::cout << "Default constructor called" << std::endl;
 }
 
-// Fixed::Fixed( const Fixed& src ) : raw_bits( src.raw_bits )
+// Fixed::Fixed( const Fixed& src ) : raw_bits( src.getRawBits() )
 // {
 // 	std::cout << "Copy constructor called" << std::endl;
 // }
@@ -17,9 +17,10 @@ Fixed::Fixed( void ) : raw_bits( 0 )
 // 	this->raw_bits = src.getRawBits();
 // }
 
-Fixed::Fixed( const Fixed& src ) : raw_bits( src.getRawBits() )
+Fixed::Fixed( const Fixed& src )
 {
 	std::cout << "Copy constructor called" << std::endl;
+	*this = src;
 }
 
 Fixed&	Fixed::operator=( const Fixed& rhs )
