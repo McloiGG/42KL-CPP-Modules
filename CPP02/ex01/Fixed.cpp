@@ -26,7 +26,7 @@ Fixed::Fixed( const Fixed& src ) : raw_bits( src.getRawBits() )
 Fixed::Fixed( const int n )
 {
 	std::cout << "Int constructor called" << std::endl;
-	this->setRawBits(n << this->fractional_bits);
+	this->setRawBits(n * (1 << this->fractional_bits));
 }
 
 Fixed::Fixed( const float f )
