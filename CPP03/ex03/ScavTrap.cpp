@@ -1,12 +1,15 @@
 #include "ScavTrap.hpp"
 #include <iostream>
 
-ScavTrap::ScavTrap() : ClapTrap("Default ScavTrap", 100, 50, 20)
+ScavTrap::ScavTrap()
+	: ClapTrap("Default ScavTrap", SCAV_HIT_POINTS,
+		SCAV_ENERGY_POINTS, SCAV_ATTACK_DAMAGE)
 {
 	std::cout << "ScavTrap " << getName() << " constructed with default values." << std::endl;
 }
 
-ScavTrap::ScavTrap(const std::string& name) : ClapTrap(name, 100, 50, 20)
+ScavTrap::ScavTrap(const std::string& name)
+	: ClapTrap(name, SCAV_HIT_POINTS, SCAV_ENERGY_POINTS, SCAV_ATTACK_DAMAGE)
 {
 	std::cout << "ScavTrap " << getName() << " constructed." << std::endl;
 }

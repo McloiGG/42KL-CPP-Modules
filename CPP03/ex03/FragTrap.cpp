@@ -1,12 +1,15 @@
 #include "FragTrap.hpp"
 #include <iostream>
 
-FragTrap::FragTrap() : ClapTrap("Default FragTrap", 100, 100, 30)
+FragTrap::FragTrap()
+	: ClapTrap("Default FragTrap", FRAG_HIT_POINTS,
+		FRAG_ENERGY_POINTS, FRAG_ATTACK_DAMAGE)
 {
 	std::cout << "FragTrap " << getName() << " constructed with default values." << std::endl;
 }
 
-FragTrap::FragTrap(const std::string& name) : ClapTrap(name, 100, 100, 30)
+FragTrap::FragTrap(const std::string& name)
+	: ClapTrap(name, FRAG_HIT_POINTS, FRAG_ENERGY_POINTS, FRAG_ATTACK_DAMAGE)
 {
 	std::cout << "FragTrap " << getName() << " constructed." << std::endl;
 }

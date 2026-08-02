@@ -16,7 +16,7 @@ public:
 	ClapTrap();
 	ClapTrap(const std::string& name);
 	ClapTrap(const ClapTrap& other);
-	ClapTrap& operator=(const ClapTrap& other);
+	ClapTrap&	operator=(const ClapTrap& other);
 	~ClapTrap();
 
 	std::string	getName() const;

@@ -16,7 +16,7 @@ ClapTrap::ClapTrap(const ClapTrap& other) : name(other.name), hitPoints(other.hi
 	std::cout << "ClapTrap " << name << " copy constructed." << std::endl;
 }
 
-ClapTrap& ClapTrap::operator=(const ClapTrap& other)
+ClapTrap&	ClapTrap::operator=(const ClapTrap& other)
 {
 	if (this != &other) {
 		name = other.name;
@@ -38,46 +38,46 @@ std::string ClapTrap::getName() const
 	return name;
 }
 
-int ClapTrap::getHitPoints() const
+int	ClapTrap::getHitPoints() const
 {
 	return hitPoints;
 }
 
-int ClapTrap::getEnergyPoints() const
+int	ClapTrap::getEnergyPoints() const
 {
 	return energyPoints;
 }
 
-int ClapTrap::getAttackDamage() const
+int	ClapTrap::getAttackDamage() const
 {
 	return attackDamage;
 }
 
-std::string ClapTrap::setName(std::string newName)
+std::string	ClapTrap::setName(std::string newName)
 {
 	name = newName;
 	return name;
 }
 
-int ClapTrap::setHitPoints(int newHitPoints)
+int	ClapTrap::setHitPoints(int newHitPoints)
 {
 	hitPoints = newHitPoints;
 	return hitPoints;
 }
 
-int ClapTrap::setEnergyPoints(int newEnergyPoints)
+int	ClapTrap::setEnergyPoints(int newEnergyPoints)
 {
 	energyPoints = newEnergyPoints;
 	return energyPoints;
 }
 
-int ClapTrap::setAttackDamage(int newAttackDamage)
+int	ClapTrap::setAttackDamage(int newAttackDamage)
 {
 	attackDamage = newAttackDamage;
 	return attackDamage;
 }
 
-bool ClapTrap::isAlive() const
+bool	ClapTrap::isAlive() const
 {
 	if (hitPoints > 0)
 		return true;
@@ -85,7 +85,7 @@ bool ClapTrap::isAlive() const
 	return false;
 }
 
-bool ClapTrap::consumeEnergy()
+bool	ClapTrap::consumeEnergy()
 {
 	if (energyPoints > 0)
 	{
@@ -108,8 +108,10 @@ void	ClapTrap::takeDamage(unsigned int amount)
 {
 	if (isAlive())
 	{
-		hitPoints -= amount;
-		if (hitPoints < 0) hitPoints = 0;
+		if (amount >= static_cast<unsigned int>(hitPoints))
+			hitPoints = 0;
+		else
+			hitPoints -= static_cast<int>(amount);
 		std::cout << "ClapTrap " << name << " takes " << amount << " points of damage! Remaining hit points: " << hitPoints << std::endl;
 		isAlive();
 	} else

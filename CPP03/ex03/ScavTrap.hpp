@@ -4,8 +4,16 @@
 
 # include "ClapTrap.hpp"
 
-class ScavTrap : public ClapTrap
+class ScavTrap : virtual public ClapTrap
 {
+protected:
+	enum
+	{
+		SCAV_HIT_POINTS = 100,
+		SCAV_ENERGY_POINTS = 50,
+		SCAV_ATTACK_DAMAGE = 20
+	};
+
 public:
 	ScavTrap();
 	ScavTrap(const std::string& name);

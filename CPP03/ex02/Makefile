@@ -1,4 +1,4 @@
-NAME = ex01
+NAME = ex02
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -Wpedantic -MMD -MP -std=c++98
@@ -7,7 +7,8 @@ SRCDIR = .
 INCDIR = .
 OBJDIR = obj
 
-SRCS = $(addprefix $(SRCDIR)/, main.cpp ClapTrap.cpp ScavTrap.cpp)
+SRCS = $(addprefix $(SRCDIR)/, main.cpp ClapTrap.cpp ScavTrap.cpp \
+	FragTrap.cpp)
 OBJS = $(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 DEPS = $(OBJS:.o=.d)
 
