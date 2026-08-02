@@ -13,9 +13,9 @@
 #include <iostream>
 #include "DiamondTrap.hpp"
 
-static void	printStats(const DiamondTrap& diamond)
+static void	printStats(const std::string& label, const DiamondTrap& diamond)
 {
-	std::cout << "ClapTrap stats: name=" << diamond.getName()
+	std::cout << label << ": ClapTrap name=" << diamond.getName()
 		<< ", hit points=" << diamond.getHitPoints()
 		<< ", energy points=" << diamond.getEnergyPoints()
 		<< ", attack damage=" << diamond.getAttackDamage() << std::endl;
@@ -35,22 +35,25 @@ int	main(void)
 	std::cout << "=== Named construction ===" << std::endl;
 	DiamondTrap	robot("Robot");
 	robot.whoAmI();
-	printStats(robot);
+	printStats("initial", robot);
 	checkSharedClapTrap(robot);
 	robot.attack("target");
 	robot.guardGate();
 	robot.highFivesGuys();
+	printStats("after attack", robot);
 
 	std::cout << "\n=== Copy construction ===" << std::endl;
 	DiamondTrap	copy(robot);
 	copy.whoAmI();
-	printStats(copy);
+	printStats("copy", copy);
 
 	std::cout << "\n=== Default construction and copy assignment ===" << std::endl;
 	DiamondTrap	assigned;
+	assigned.whoAmI();
+	printStats("default", assigned);
 	assigned = robot;
 	assigned.whoAmI();
-	printStats(assigned);
+	printStats("assigned", assigned);
 
 	std::cout << "\n=== Destruction in reverse construction order ==="
 		<< std::endl;
