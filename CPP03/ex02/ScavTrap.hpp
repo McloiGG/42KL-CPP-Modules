@@ -13,8 +13,8 @@ public:
 	ScavTrap&	operator=(const ScavTrap& other);
 	~ScavTrap();
 
-	void			guardGate();
-	virtual void	attack(const std::string& target);
+	void	guardGate();
+	void	attack(const std::string& target);
 };
 
 #endif
