@@ -6,8 +6,10 @@
 
 class	WrongAnimal
 {
-protected:
+private:
 	std::string	type;
+protected:
+	explicit WrongAnimal(const std::string& animalType);
 public:
 	WrongAnimal();
 	WrongAnimal(const WrongAnimal& other);

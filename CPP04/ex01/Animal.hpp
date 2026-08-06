@@ -6,8 +6,10 @@
 
 class	Animal
 {
-protected:
+private:
 	std::string	type;
+protected:
+	explicit Animal(const std::string& animalType);
 public:
 	Animal();
 	Animal(const Animal& other);
