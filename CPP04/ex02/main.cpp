@@ -3,21 +3,21 @@
 #include "Cat.hpp"
 #include <iostream>
 
-// class IncompleteAnimal : public Animal
+// class	IncompleteAnimal : public Animal
 // {
 // };
 
-// class BadAnimal : public Animal
+// class	BadAnimal : public Animal
 // {
 // public:
-// 	void makeSound();
+// 	void	makeSound();
 // };
 
-int main()
+int	main()
 {
 	// Animal animal;
-	// const Animal* animal = new Animal();
-	// IncompleteAnimal incomplete;
-	// BadAnimal bad;
+	// const Animal*	animal = new Animal();
+	// IncompleteAnimal	incomplete;
+	// BadAnimal	bad;
 	return 0;
 }

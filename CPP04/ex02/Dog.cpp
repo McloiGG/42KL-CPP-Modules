@@ -11,7 +11,7 @@ Dog::Dog(const Dog& other) : Animal(other), brain(new Brain(*other.brain))
 	std::cout << "Dog copy constructor called" << std::endl;
 }
 
-Dog& Dog::operator=(const Dog& other)
+Dog&	Dog::operator=(const Dog& other)
 {
 	if (this != &other)
 	{
@@ -28,7 +28,7 @@ Dog::~Dog()
 	delete this->brain;
 }
 
-void Dog::makeSound() const
+void	Dog::makeSound() const
 {
 	std::cout << "Dog barks: Woof! Woof!" << std::endl;
 }

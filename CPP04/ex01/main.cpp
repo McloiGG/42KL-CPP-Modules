@@ -3,10 +3,10 @@
 #include "Cat.hpp"
 #include <iostream>
 
-int main()
+int	main()
 {
 	{
-		const int		count = 6;
+		const int	count = 6;
 		const Animal*	animals[count];
 
 		std::cout << "\n=== Animal array ===" << std::endl;
@@ -21,10 +21,10 @@ int main()
 		std::cout << "\n=== Deep copy test ===" << std::endl;
 		const Dog*	j = new Dog();
 		const Cat*	i = new Cat();
-		Dog			jCopy(*j);
-		Dog			jAssigned;
-		Cat			iCopy(*i);
-		Cat			iAssigned;
+		Dog	jCopy(*j);
+		Dog	jAssigned;
+		Cat	iCopy(*i);
+		Cat	iAssigned;
 
 		jAssigned = *j;
 		iAssigned = *i;
@@ -37,5 +37,5 @@ int main()
 		iCopy.makeSound();
 		iAssigned.makeSound();
 	}
-		return 0;
+	return 0;
 }
