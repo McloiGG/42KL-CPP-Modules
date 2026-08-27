@@ -24,6 +24,22 @@ int main()
 	me->use(0, *bob);
 	me->use(1, *bob);
 
+	// {
+	// 	ICharacter*	tmpChar = new Character("tmp");
+	// 	AMateria*	tmpMat = src->createMateria("ice");
+
+	// 	tmpChar->equip(tmpMat);
+	// 	tmpChar->use(0, *bob);
+
+	// 	AMateria*	saved = tmpMat;
+
+	// 	tmpChar->unequip(0);
+	// 	tmpChar->use(0, *bob);
+
+	// 	delete saved;
+	// 	delete tmpChar;
+	// }
+
 	delete bob;
 	delete me;
 	delete src;
