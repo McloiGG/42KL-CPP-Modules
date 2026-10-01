@@ -1,2 +1,4 @@
 .agents/
 *.zip
+obj/
+tmp/
