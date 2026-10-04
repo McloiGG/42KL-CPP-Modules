@@ -1,5 +1,6 @@
 #include "ScalarConverter.hpp"
 #include <cctype>
+#include <cmath>
 #include <iostream>
 #include <limits>
 #include <sstream>
@@ -52,6 +53,8 @@ static bool	fitsIn(double n)
 {
 	T	low = std::numeric_limits<T>::is_integer ? std::numeric_limits<T>::min() : -std::numeric_limits<T>::max();
 
+	if (std::numeric_limits<T>::is_integer)
+		n = n < 0 ? std::ceil(n) : std::floor(n);
 	return n >= static_cast<double>(low) && n <= static_cast<double>(std::numeric_limits<T>::max());
 }
 
@@ -126,13 +129,13 @@ static LiteralType	getNumeric(const std::string& literal)
 		return INVALID;
 	if (literal[i] == '+' || literal[i] == '-')
 		++i;
-	for (; i < literal.size() && std::isdigit(literal[i]); ++i)
+	for (; i < literal.size() && std::isdigit(static_cast<unsigned char>(literal[i])); ++i)
 		digits = true;
 	if (i < literal.size() && literal[i] == '.')
 	{
 		decimal = true;
 		++i;
-		for (; i < literal.size() && std::isdigit(literal[i]); ++i)
+		for (; i < literal.size() && std::isdigit(static_cast<unsigned char>(literal[i])); ++i)
 			digits = true;
 	}
 	if (!digits)
@@ -144,7 +147,7 @@ static LiteralType	getNumeric(const std::string& literal)
 		if (i < literal.size() && (literal[i] == '+' || literal[i] == '-'))
 			++i;
 		std::size_t	start = i;
-		for (; i < literal.size() && std::isdigit(literal[i]); ++i);
+		for (; i < literal.size() && std::isdigit(static_cast<unsigned char>(literal[i])); ++i);
 		if (i == start)
 			return INVALID;
 	}
@@ -173,7 +176,7 @@ static bool	parsePsuedo(const std::string& literal, const std::string& suffix)
 
 void	ScalarConverter::convert(const std::string& literal)
 {
-	if (literal.size() == 1 && !std::isdigit(literal[0]) && std::isprint(static_cast<unsigned char>(literal[0])))
+	if (literal.size() == 1 && !std::isdigit(static_cast<unsigned char>(literal[0])) && std::isprint(static_cast<unsigned char>(literal[0])))
 	{
 		printConversions(literal[0]);
 		return;
